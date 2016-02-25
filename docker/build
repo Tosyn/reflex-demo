@@ -1,0 +1,5 @@
+#!/bin/bash
+export DOCKER_DEV_UID=$(id -u ${USER})
+export USER=$(whoami)
+cat Dockerfile.template | envsubst | docker build $@ -t iroko -
+unset DOCKER_DEV_UID

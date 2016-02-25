@@ -1,0 +1,43 @@
+FROM ubuntu:14.04
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update \
+    && apt-get install -y nginx \
+    	curl \
+    	wget \
+	sudo \
+	vim \
+	git
+
+RUN adduser developer --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-password  --shell /bin/bash \
+    && echo "developer:password" | sudo chpasswd \
+    && adduser developer sudo \
+    && ln -s /home/developer /workspace \
+    && chown -R developer:developer /workspace \
+    && mkdir /nix \
+    && chown -R developer /nix
+
+USER developer
+WORKDIR /home/developer
+RUN curl -kL https://nixos.org/nix/install | env USER=developer bash
+
+WORKDIR /home/developer/
+RUN git clone https://github.com/reflex-frp/reflex-platform
+
+WORKDIR /home/developer/reflex-platform
+RUN ./try-reflex
+
+USER root
+
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log \
+    && echo "daemon off;" >> /etc/nginx/nginx.conf \
+    && sed -i "$ a developer ALL = NOPASSWD: /usr/sbin/nginx" /etc/sudoers \
+    && apt-get clean \
+    && apt-get -y autoremove \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/man/* /usr/src/*
+
+WORKDIR /home/developer/reflex-platform
+
+CMD sudo nginx

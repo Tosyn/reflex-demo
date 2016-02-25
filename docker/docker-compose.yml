@@ -1,0 +1,15 @@
+iroko:
+  image: iroko
+  hostname: iroko
+  user: developer
+  ports:
+    - "8282:80"
+#  working_dir: /var/www-iroko/
+  volumes:
+    - ./../:/var/www-iroko/
+    - ./../conf/vhost.conf:/etc/nginx/sites-enabled/vhost.conf
+  extra_hosts:
+    - "iroko.dev:127.0.0.1"
+  environment:
+    - TERM=xterm
+
