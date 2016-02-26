@@ -30,7 +30,8 @@ RUN ./try-reflex
 
 USER root
 
-RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+RUN rm /etc/nginx/sites-enabled/default \
+    && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log \
     && echo "daemon off;" >> /etc/nginx/nginx.conf \
     && sed -i "$ a developer ALL = NOPASSWD: /usr/sbin/nginx" /etc/sudoers \
@@ -38,6 +39,5 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/man/* /usr/src/*
 
-WORKDIR /home/developer/reflex-platform
 
 CMD sudo nginx

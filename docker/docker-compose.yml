@@ -4,10 +4,10 @@ iroko:
   user: developer
   ports:
     - "8282:80"
-#  working_dir: /var/www-iroko/
+  working_dir: /var/www-reflex-frp
   volumes:
-    - ./../:/var/www-iroko/
-    - ./../conf/vhost.conf:/etc/nginx/sites-enabled/vhost.conf
+    - ./../:/var/www-reflex-frp
+    - ./../vhost.conf:/etc/nginx/sites-enabled/vhost.conf
   extra_hosts:
     - "iroko.dev:127.0.0.1"
   environment:
