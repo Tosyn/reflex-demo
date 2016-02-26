@@ -1,6 +1,6 @@
-iroko:
-  image: iroko
-  hostname: iroko
+reflexDemo:
+  image: reflex-demo
+  hostname: reflex-demo
   user: developer
   ports:
     - "8282:80"
@@ -9,7 +9,7 @@ iroko:
     - ./../:/var/www-reflex-frp
     - ./../vhost.conf:/etc/nginx/sites-enabled/vhost.conf
   extra_hosts:
-    - "iroko.dev:127.0.0.1"
+    - "reflex-demo.dev:127.0.0.1"
   environment:
     - TERM=xterm
 

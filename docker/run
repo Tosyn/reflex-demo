@@ -3,8 +3,8 @@ docker run \
     --rm=true \
     -t \
     -i \
-    --name iroko \
+    --name reflex-demo \
     -v $(dirname $SSH_AUTH_SOCK):$(dirname $SSH_AUTH_SOCK) \
     -e SSH_AUTH_SOCK=$SSH_AUTH_SOCK \
     -v $(pwd)/../:/workspace/base  \
-    iroko chown -R $(id -u):$(id -g) $1
+    reflex-demo chown -R $(id -u):$(id -g) $1
