@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# install nix
-curl https://nixos.org/nix/install | sh 
 
-# install reflex
+# install reflex platform
 git clone https://github.com/reflex-frp/reflex-platform
+
+# start nix shell
 cd reflex-platform
 ./try-reflex
 
